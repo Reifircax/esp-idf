@@ -38,7 +38,6 @@
 #include "soc/timer_group_reg.h"
 #include "soc/gpio_periph.h"
 #include "soc/rtc_wdt.h"
-
 #include "sdkconfig.h"
 #include "esp_image_format.h"
 #include "esp_secure_boot.h"
@@ -66,6 +65,11 @@ static void flash_gpio_configure(const esp_image_header_t* pfhdr);
 static void uart_console_configure(void);
 static void wdt_reset_check(void);
 
+static void Bootloader_setRedLed(void)
+{
+    gpio_pad_select_gpio(32);
+    GPIO_OUTPUT_SET(32, 1);
+}
 
 esp_err_t bootloader_init()
 {
@@ -138,6 +142,8 @@ static esp_err_t bootloader_main()
     uart_console_configure();
     wdt_reset_check();
     ESP_LOGI(TAG, "ESP-IDF %s 2nd stage bootloader", IDF_VER);
+
+    Bootloader_setRedLed();
 
     ESP_LOGI(TAG, "compile time " __TIME__ );
     ets_set_appcpu_boot_addr(0);
