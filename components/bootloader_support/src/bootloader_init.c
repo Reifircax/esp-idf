@@ -66,10 +66,12 @@ static void bootloader_init_flash_configure(const esp_image_header_t* pfhdr);
 static void uart_console_configure(void);
 static void wdt_reset_check(void);
 
-static void Bootloader_setRedLed(void)
+static void Bootloader_setOrangeLed(void)
 {
     gpio_pad_select_gpio(32);
+    gpio_pad_select_gpio(33);
     GPIO_OUTPUT_SET(32, 1);
+    GPIO_OUTPUT_SET(33, 1);
 }
 
 esp_err_t bootloader_init()
@@ -152,7 +154,7 @@ static esp_err_t bootloader_main()
     wdt_reset_check();
     ESP_LOGI(TAG, "ESP-IDF %s 2nd stage bootloader", IDF_VER);
 
-    Bootloader_setRedLed();
+    Bootloader_setOrangeLed();
 
     ESP_LOGI(TAG, "compile time " __TIME__ );
     ets_set_appcpu_boot_addr(0);
