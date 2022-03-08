@@ -9,6 +9,8 @@
 #include "crypto/aes_wrap.h"
 #include "mbedtls/aes.h"
 
+#if defined(MBEDTLS_CIPHER_MODE_CBC)
+
 /**
  * fast_aes_128_cbc_encrypt - AES-128 CBC encryption
  * @key: Encryption key
@@ -76,3 +78,5 @@ fast_aes_128_cbc_decrypt(const uint8_t *key, const uint8_t *iv, uint8_t *data, s
     return ret;
 
 }
+
+#endif
